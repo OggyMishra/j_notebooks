@@ -1,0 +1,207 @@
+Lending Club case study:
+-------------------------------------
+It's a marketplace for personal loans that matches borrowers who are seeking a lon with the investor
+looking to lend money and make a return.
+
+- Investor wants to invest as much as possible:
+- Risk: 
+	- Reject persons who are capable of returning the loan
+	- Approve loan who are not capable to pay them back.
+
+- Now investor hired you to 
+   - Idenitfy, what are the various fields that contribute to person becoming defaulter.
+   - List of variable which are strong indicator of person becoming defaulter.
+   - 
+
+** How lending club works ?
+1) Customers interested in a loan complete a simple application at lendingclub.com
+2) Lending club evaluates each borrowers's credit score using past hitorical data(and their data science process!) and assigns an interest rate to the borrower.
+3) Qualified applicants recievce loan offers in just minutes and can evauate their options with no impact to their credit score.
+4) Investors select the loans they want to invest in based on their own risk tolerance, investment, porfolio goals, And time horizon.
+
+
+Given data has 3 main columns:
+
+1) loan_amnt: Amount Borrower is looking for 
+2) funded_amnt: Approved the lending club.
+3) funder_amnt_inv: Amount that the person recieved by the borrower.
+
+
+
+Data Undertanding:
+
+1) Read the data to python dataframe.
+2) Check the datatype of various columns.
+3) Correct the datatype of the column if required: Hint
+	a) Check columns where you may require to extract numerical data. e.g Year from date column.
+4) Identify the target column. Hint there will be three cateogy: completed| weived off or defaulter | Loan is going on.
+
+
+
+How to do:
+- Check the data by brining it into python.
+- Check the shape of the data.
+- Check the datatype of the all the columns
+
+
+Data Cleaning:
+1) Check the percentage of missing values. If missing values are 50% then you can remove those rows or columns.
+2) Remove all those with very high missing percentage:
+3) For columsns with less missing percentage; perform data cleaning steps for both columns are rows
+	a) You don't need to impute the data, you can just identify the correct metric to impute the column: if missing data is 5% then you can just see the mean or median imputtion.
+	DONT IMPUTE THE DATA
+
+	b) You can drop rows where the missing percentage is quite high.
+
+
+Data Analysis:
+
+- The objective is to identify predictors of default so that a the time of loan application, we can use those variables for approval /rejection of the loan . Now there are broadly three types of variables
+1) Those which are related to the applicant(demographic variables such as age, occupation, employment details etc).
+2) Loan Charactersitics: Amount of loan, interst rate, purpose of loan etc.
+3) Customer Behavior variables: (Those which are generated after the loan is approved such as delinquent 2 years, resolving balance, next paymennt date etc..)
+
+- Now the customer behavior variables are not available at the time of loan application and thus they cannot be used as predicators for credit approval.
+
+- The ones marked 'current' are neither fully paid not defaulted, so get rid of the current loans. Also tag the other two values as - or 1 to make your analysis simple and clean.
+
+
+Univariate Analysis:
+- For univariate Analysis, you may check the defaulter rate across various categorical features.
+- For Contnious feature, you may perform binnning and then you may perform univaraite Analysis.
+
+e.g of Categorical varaibles: 
+- Grade
+- Term
+- Sub-Grade
+In categorical variables you can draw the bar graphs to analyse the defaulter percentage across different categorical variable.
+
+e.g of Continous var:
+- Amount
+- DTI
+- Loan amount
+In Contnious variable you can use binning to create bins of different groups and then chart bar graph to find the defaulter percentage across different continous variables.
+
+
+
+Bivariate Analysis:
+Here yo may choose two or more feature to understand the defaulter variable:
+e.g: you can draw graph using the term on X axis, and make corposes of purpose against the defaulter percentage.
+
+e.g :For numerical values Make a scatter graph between the amount and funded_amount.
+you can check if amount is high then funded_amount is high or not
+
+you can also draw corelation matrix among different numerical variables.
+
+
+
+Recommendations:
+
+- Remember this is an important part of the case study. Atter performing your analysis, you need to recommended some points to the investors. You need to emphasize on how they can reduces the chances of funding a likely defaulter.
+
+- This is need to be done for both PPT and jupyter notebook
+
+Points to remember:
+- Any assumption taken is fine, unitl it's clearly mentioned on your jupyter notebook.
+- PPT should not have any code. You can include plots with the explanation and recommendation to the investor.
+- Convert PPT to pdf and then submit it.
+- A single zip file is needed to be submitted with one jupyter notebook and pdf file.
+- Don't forget to comment the code properly as it carries separate marks.
+
+
+
+
+Warnings:
+
+Don't include your analysis step like how you handled missing value..
+
+Add only these outcomes:
+---------------------------
+Result:
+Steps:
+Conclusion:
+
+Question/Answers
+Q) When should we use Median to impute missing values rather than Mean? 
+Ans) When the data is having outliers.
+
+Q) Should we drop the variable if we have 30% missing values:
+Ans) Depends how critical the variable is.
+
+Q) If my target column in the data has the number of 0s as 80 and the number of 1s as 20, then what is the imbalance percentage of the given target column?
+Ans) 20%
+
+WHat is imbalance percentage: no of 1s / total rows *100, always rememeber we compute implance % using positive rows.
+
+Q) Suppose there is a data with 1000 rows, we have a categorical columns with two categories. One of the category has 950 observations while the dother have 50 observation. Is this fine to keep this variable if we need to build a model using this data ?
+No: If the column is not critical then you can remove that column.
+
+Q) If we have huge amount of data, is it ok to process it in local machine or should we look for any alternative:
+Ans) Look for an alternative, like cloud platforms.
+
+
+
+
+==============================================================================
+My Analysis:
+
+We have to think about the variables which are prior to the loan approval, so there is no need to analyse these variables.
+We have to analyse loan charterstics.
+
+- we can remove those rows on which loan status is 'Current'.
+
+
+DIfferene in funded_amount and funded_amount_investor:
+
+funded_amount which lending.com is suggesting while funded_amount_investor is the amount which is actually approved by the investor.
+
+
+
+Think about:
+Age factor, if they have their own home, car etc.
+
+
+------------------------------------------------------------------------------------------------------
+Following are the variables:
+
+- dti: A ratio calculated using the borrower’s total monthly debt payments on the total debt obligations, excluding mortgage and the requested LC loan, divided by the borrower’s self-reported monthly income.
+small ratio means less borrowing.
+
+- delinq_2yrs: The number of 30+ days past-due incidences of delinquency in the borrower's credit file for the past 2 years
+- earliest_cr_line: The month the borrower's earliest reported credit line was opened
+- inq_last_6mths: The number of inquiries in past 6 months (excluding auto and mortgage inquiries)
+- mths_since_last_delinq: The number of months since the borrower's last delinquency.
+- mths_since_last_record: The number of months since the last public record.
+- open_acc: The number of open credit lines in the borrower's credit file.
+- pub_rec: Number of derogatory public records
+- revol_bal: Total credit revolving balance
+- revol_util: Revolving line utilization rate, or the amount of credit the borrower is using relative to all available revolving credit.
+- total_acc: The total number of credit lines currently in the borrower's credit file
+- initial_list_status: The initial listing status of the loan. Possible values are – W, F
+- out_prncp: Remaining outstanding principal for total amount funded
+- out_prncp_inv: Remaining outstanding principal for portion of total amount funded by investors
+- total_pymnt: Payments received to date for total amount funded
+- total_pymnt_inv: Payments received to date for portion of total amount funded by investors
+- total_rec_prncp: Principal received to date
+- total_rec_int: Interest received to date
+- total_rec_late_fee: Late fees received to date
+- recoveries: post charge off gross recovery
+- collection_recovery_fee: post charge off collection fee
+- last_pymnt_d: Last month payment was received
+- last_pymnt_amnt: Last total payment amount received
+- next_pymnt_d: Next scheduled payment date
+- last_credit_pull_d: The most recent month LC pulled credit for this loan
+- collections_12_mths_ex_med: Number of collections in 12 months excluding medical collections
+- mths_since_last_major_derog: Months since most recent 90-day or worse rating
+- policy_code:
+- application_type: Indicates whether the loan is an individual application or a joint application with two co-borrowers
+- annual_inc_joint: The combined self-reported annual income provided by the co-borrowers during registration
+- dti_joint: A ratio calculated using the co-borrowers' total monthly payments on the total debt obligations, excluding mortgages and the requested LC loan, divided by the co-borrowers' combined self-reported monthly income
+- verification_status_joint: Indicates if the co-borrowers' joint income was verified by LC, not verified, or if the income source was verified
+- acc_now_delinq: The number of accounts on which the borrower is now delinquent.
+
+===================================================================================================================================
+Columns which are NA or data is not availble:
+- 
+
+

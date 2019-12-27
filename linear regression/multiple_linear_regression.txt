@@ -1,0 +1,134 @@
+MLR:
+
+- Categorical variable:
+
+Creation of dummy variable to convert a categorical variable into a numeric variable is an important step in data prep.
+
+
+Have n levels of categorical variable, we create n-1 dummy variable. 
+For a variable say 'RelationShip' with three levels namely 'Single', 'In a relationship' and 'married'. you would create a dummy variable like
+
+
+Status       single        in relationship             married
+
+Single        1               0                          0
+In a rela     0               1                          0
+Married       0               0                          1
+
+
+But there is no need to define three different levels, if you drop a level say 'single' you would still be able to explain the three levels.
+
+
+For e.g
+
+Status        in relationship                 married
+
+Single          0                               0
+In relatio      1                               0
+Married         0                               1
+
+
+
+- Scaling of variables:
+why do we need to scale the features ?
+
+1. Ease of interpretation.
+2. Faster convergence for gradient descent method
+
+what changes on changing the scaling of a variable: nothing changes, p-value or modal accuracy doesn't change at all.
+Note: Scaling only changes the coefficients and none of the other parameters like t-statistics, F-statistic, p-values and R-squared etc doesn't change at all.
+
+Methods of scaling a variable:
+- Standardisation: 
+Standardisation basically bring all of the data into a std normal distribution with mean zero and sd as one(1).
+
+x = x - mean(x)/sd(x)
+
+- MinMax scaling:
+It brings all the data in the range of 0 and 1. 
+
+x = x- min(x)/max(x) - min(x)
+
+
+
+Model assesment and comparision:
+-------------------------------------------------
+
+Once the model is built, you have to assess it in terms of its predicitve powers. For multiple linear regression, you may build more than one model, with different combinations of the independent variables. In such cases, you would also need to compare these models with one another to check which one yields optimal results.
+
+
+Selecting the best model is a subjective decision. We need to maintain a balance between keeping the model simple and explaining the highest variance.
+
+Highest variance: you would want to keep as many vairables as possible.
+
+Selecting the model can be done using the idea that a model can be penalised for keeping a large no of predictor variables.
+
+
+There are two new parameters that can decide the effectivenesss of a model
+
+1) Adjusted R^2 = 1 - (1- R^2)(N-1)/N-p-1
+2) AIC = n X log(RSS/n) + 2p
+
+Here, n is the sample size which means the no of rows you'd have in the dataset and p is the number of predictor variables.
+
+
+There are other methods to find the effectiveness:
+- AIC
+- BIC
+- Mallows CP
+
+
+Why Adjusted R squared is a good measure to fine the effectivness of a model:
+-------------------------------------------------------------------------------------------------
+
+The major difference between R-Squared and adjusted R-Squared is that R-squared doesn't penalise the model for having more number of variables. Thus if you keep on adding variables to the model, the R-Squared will always increase(or remain same the same in the case when the valur of correlation between that variable and the dependent variable is zero).
+The R-Squared assumes that any variable added to the model will increase the predictive power.
+
+Adjusted R-Squared on the other hand, penalises models based on the number of variables present in it. So if you add a variable and the adjusted R-squared drops. You can be certain the at that variable is insignificant to the model and should not be used. So in the case of multiple linear regression ou should always look at the adjusted R-squared value in order to keep redundant variables our from the your regression model.
+
+
+
+Feature Selection:
+=====================================================
+
+When biilding a MLR model , you might have quite a few potential predictor variables, selecting just the right ones becomes an extremly important exercise.
+
+How to select the optimal features for building a good model::
+
+1) All combinations
+Try all combination of variables.
+2^ p
+
+2) Manual feature elimination:
+- BUild model
+- Drop feature that are least helpful in prediction(high p- value)
+- Drop feature that are redundant(using correlations, VIF)
+- Re build model and repeat.
+
+Manual feature selection works for relatively low number of potential predictor variables. Say ten or even twenty.
+For a large number of features say 100. In such a case, you automate the feaure selection (or elimination) process.
+
+
+3) Automated Approach:
+Criteria/rules :
+- Top 'n' features: RFE ( Recursive Feature Selection)
+- Forward/Backward/Stepwise Selection: Based on AIC
+- Regularization (lasso)
+
+A balance approach: use a combination of automated (coarse tuning) + manual (fine tuning) selection.
+
+
+
+RFE: Recursive Feature Elinimation
+
+RFE elimination, is based on the idea of repeatedly constructing a model ( for e.g SVM or a regression model) and choosing either the best or worst performing feature ( for e.g based on the coefficients), setting the feature aside and then repeating the process with the rest of the features. This process is applied unitl all the features in the dataset are exhausted. Features are then ranked according to when they were eliminated. As such, it's a greedy optimisation for finding the best performing subset of features.
+
+
+
+
+Examples of linear regression:
+
+1) An org revenue assurance and business planning team wants a prepare weekly revenue forecast based on the previous week/month/year's performance.
+2) A media company launched a new show which had >1 million views every day. The expected higher views during weekend, but the views decreased why ?
+3) A company has a set marketing budget, and various marketing channels, TV, Social media, newsprint, radio other digital platforms. What is the ROI from each channel ? How to allocate the budget optimally
+4) A telcom coma
